@@ -1,0 +1,99 @@
+Option Explicit
+Dim irc As Long
+Dim ircFilter As Long
+Dim RowCountMaster As Long
+Dim RowCountMasterMini As Long
+Dim path As String
+Dim wbk As String
+Dim file As String
+Dim cFile As Workbook
+Dim team As String
+
+
+
+Sub MASTER_file_update_nowe_filtry()
+
+
+path = "J:\folder_names" ' Path should always contain a '\' at end
+file = Dir(path)    ' Retrieving the first entry.
+    
+
+    If ThisWorkbook.Worksheets("Sheet1").Range("G1000000").End(xlUp).row < 3 Then
+    RowCountMaster = 3     ' znalezienie ostatniego wiersza
+    Else: RowCountMaster = ThisWorkbook.Worksheets("Sheet1").Range("G1000000").End(xlUp).row
+    End If
+
+
+    ThisWorkbook.Worksheets("Sheet1").Range("B3:k" & RowCountMaster).ClearContents 'zaznacz caly zakres danych od b3 do konca i usun zawartosc
+    
+    team = InputBox("Please enter the name of the team:")
+
+              Do Until file = ""   ' Start the loop.
+            
+                  Set cFile = Workbooks.Open(path & file)
+                  
+                  irc = cFile.Worksheets(1).Range("B100000").End(xlUp).row
+                  
+                  ActiveSheet.AutoFilterMode = False
+                  ActiveSheet.Range("B5:J" & irc).AutoFilter Field:=5, Criteria1:=team & "_*", Operator:=xlAnd
+                  
+                  
+                  
+                  
+                                 
+    If ThisWorkbook.Worksheets("Sheet1").Range("B1000000").End(xlUp).row < 3 Then
+    RowCountMaster = 2     ' znalezienie ostatniego wiersza
+    Else: RowCountMaster = ThisWorkbook.Worksheets("Sheet1").Range("B1000000").End(xlUp).row
+    End If
+    
+            
+            
+        ircFilter = cFile.Worksheets(1).Range("B100000").End(xlUp).row
+        
+        If ircFilter = 5 Then
+        
+         cFile.Worksheets(1).Range(Cells(6, 2), Cells(6, 10)).Copy _
+        Destination:=ThisWorkbook.Worksheets("Sheet1").Range("C" & RowCountMaster + 1)
+        ThisWorkbook.Worksheets("Sheet1").Range("C" & RowCountMaster + 1).ClearContents
+                
+        Else
+        
+        cFile.Worksheets(1).Range(Cells(6, 2), Cells(ircFilter, 10)).Copy _
+        Destination:=ThisWorkbook.Worksheets("Sheet1").Range("C" & RowCountMaster + 1) ' wklejenie do pliku
+        
+       
+            
+    
+    If ThisWorkbook.Worksheets("Sheet1").Range("C1000000").End(xlUp).row < 3 Then
+    RowCountMaster = 3     ' znalezienie ostatniego wiersza
+    Else: RowCountMaster = ThisWorkbook.Worksheets("Sheet1").Range("C1000000").End(xlUp).row
+    End If
+    
+    
+    If ThisWorkbook.Worksheets("Sheet1").Range("B1000000").End(xlUp).row < 3 Then
+    RowCountMasterMini = 2
+    Else: RowCountMasterMini = ThisWorkbook.Worksheets("Sheet1").Range("B1000000").End(xlUp).row
+    End If
+
+    
+    
+        
+    
+        
+       ThisWorkbook.Worksheets("Sheet1").Range("B" & RowCountMasterMini + 1 & ":B" & RowCountMaster).Value = cFile.Worksheets(1).Range("C3").Value 'wklejenie nazwy uzytkownika obok danych
+        
+         End If
+            
+            
+            cFile.Close savechanges:=False
+            
+            
+               file = Dir()   ' Getting next entry.
+              
+            Loop
+
+    RowCountMaster = ThisWorkbook.Worksheets("Sheet1").Range("G1000000").End(xlUp).row
+    ThisWorkbook.Worksheets("Sheet1").Range(Cells(RowCountMaster, 2), Cells(RowCountMaster, 11)).ClearContents
+    
+              
+End Sub
