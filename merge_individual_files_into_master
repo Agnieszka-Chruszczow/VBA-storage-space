@@ -1,0 +1,95 @@
+Option Explicit
+Dim irc As Long
+Dim icc As Long
+Dim RowCountMaster As Long
+Dim RowCountMasterMini As Long
+Dim path As String
+Dim wbk As String
+Dim file As String
+Dim cFile As Workbook
+Dim BeginDay As String
+Dim BeginMonth As String
+Dim BeginYear As String
+Dim BeginDate As String
+Dim EndDay As String
+Dim EndMonth As String
+Dim EndYear As String
+Dim EndDate As String
+
+
+
+
+
+
+Sub MASTER_file_update_Date()
+
+Application.DisplayAlerts = False
+
+path = "J:\C\folder_name\" ' Path should always contain a '\' at end
+file = Dir(path)    ' Retrieving the first entry.
+    
+
+     RowCountMaster = ThisWorkbook.Worksheets("Sheet1").Range("B1000000").End(xlUp).row
+ 
+
+
+    ThisWorkbook.Worksheets("Sheet1").Range("B3:M" & RowCountMaster).ClearContents 'zaznacz caly zakres danych od b3 do konca i usun zawartosc
+    
+    BeginDay = InputBox("Please enter the beginning DAY of completing the request")
+    BeginMonth = InputBox("Please enter the beginning MONTH of completing the request")
+    BeginYear = InputBox("Please enter the beginning YEAR of completing the request")
+    BeginDate = BeginMonth & "/" & BeginDay & "/" & BeginYear
+    EndDay = InputBox("Please enter the final DAY of completing the request")
+    EndMonth = InputBox("Please enter the final MONTH of completing the request")
+    EndYear = InputBox("Please enter the final YEAR of completing the request")
+    EndDate = EndMonth & "/" & EndDay & "/" & EndYear
+    
+
+              Do Until file = ""   ' Start the loop.
+            
+                  Set cFile = Workbooks.Open(path & file)
+                  
+                  irc = cFile.Worksheets(1).Range("B100000").End(xlUp).row
+                  
+                                                               
+                        cFile.Worksheets(1).Range("B5:L" & irc).AutoFilter Field:=6, Criteria1:=">=" & BeginDate, Operator:=xlAnd, Criteria2:="<=" & EndDate
+                        
+                        
+                                      
+                  
+          irc = cFile.Worksheets(1).Range("B100000").End(xlUp).row
+                                 
+     RowCountMaster = ThisWorkbook.Worksheets("Sheet1").Range("B1000000").End(xlUp).row
+                  
+        cFile.Worksheets(1).Range(Cells(6, 2), Cells(irc, 12)).Copy _
+        Destination:=ThisWorkbook.Worksheets("Sheet1").Range("C" & RowCountMaster + 1) ' wklejenie do pliku
+        
+            
+            
+    RowCountMaster = ThisWorkbook.Worksheets("Sheet1").Range("C1000000").End(xlUp).row
+       
+    
+     RowCountMasterMini = ThisWorkbook.Worksheets("Sheet1").Range("B1000000").End(xlUp).row
+   
+   
+    
+        
+    
+        
+       ThisWorkbook.Worksheets("Sheet1").Range("B" & RowCountMasterMini + 1 & ":B" & RowCountMaster).Value = cFile.Worksheets(1).Range("C3").Value 'wklejenie nazwy uzytkownika obok danych
+        
+          
+            
+            
+            
+            cFile.Close savechanges:=False
+            
+            
+               file = Dir()   ' Getting next entry.
+              
+            Loop
+
+                
+            
+
+End Sub
