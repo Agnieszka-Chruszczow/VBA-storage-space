@@ -1,0 +1,102 @@
+Option Explicit
+
+Sub Multi_FindReplace_DataFormat()
+'PURPOSE: Find & Replace a list of text/values throughout entire workbook
+
+
+                                                                'Dim sht As Worksheet
+Dim fndList As Variant
+                                                                'Dim rplcList As Variant
+Dim rplc As Variant
+Dim X As Long
+
+fndList = Array("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", _
+"p", "q", "r", "s", "t", "u", "v", "x", "w", "y", "z", " ", ".", "-", "/", "\", ",", ":", ";", "_") '<============== tu dalej dopisa?
+                                                            'rplcList = Array("can", "usa")
+
+
+rplc = ""
+
+
+
+                                                            'Loop through each item in Array lists
+   For X = LBound(fndList) To UBound(fndList)
+                                                            'Loop through each worksheet in ActiveWorkbook
+                                                            'For Each sht In ActiveWorkbook.Worksheets
+        
+                                'If Selection.Value = x Then
+                                                    'sht.Cells.Replace What:=fndList(x), Replacement:=rplcList(x), _
+                                                              LookAt:=xlPart, SearchOrder:=xlByRows, MatchCase:=False, _
+                                                                SearchFormat:=False, ReplaceFormat:=False
+          
+         Selection.Replace What:=fndList(X), Replacement:=rplc, _
+          LookAt:=xlPart, SearchOrder:=xlByRows, MatchCase:=False, _
+          SearchFormat:=False, ReplaceFormat:=False
+          
+          
+                                        'End If
+                                                                        'Next sht
+  
+  Next X
+
+'Selection.NumberFormat = "00000000"
+
+Selection.Replace What:="'", Replacement:="", LookAt:=xlPart, _
+        SearchOrder:=xlByRows, MatchCase:=False, SearchFormat:=False, _
+        ReplaceFormat:=False
+        
+        
+       ' Selection.Replace What:="'", Replacement:="", LookAt:=xlPart, SearchOrder:=xlByRows, MatchCase:=False, SearchFormat:=False, ReplaceFormat:=False
+
+End Sub
+
+
+
+Sub Multi_FindReplace()
+'PURPOSE: Find & Replace a list of text/values throughout entire workbook
+
+
+                                                                'Dim sht As Worksheet
+Dim fndList As Variant
+                                                                'Dim rplcList As Variant
+Dim rplc As Variant
+Dim X As Long
+
+fndList = Array("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", _
+"p", "q", "r", "s", "t", "u", "v", "x", "w", "y", "z", " ", ".", "-", "/", "\", ",", ":", ";", "_") '<============== tu dalej dopisa?
+                                                            'rplcList = Array("can", "usa")
+
+
+rplc = ""
+
+
+
+                                                            'Loop through each item in Array lists
+   For X = LBound(fndList) To UBound(fndList)
+                                                            'Loop through each worksheet in ActiveWorkbook
+                                                            'For Each sht In ActiveWorkbook.Worksheets
+        
+                                'If Selection.Value = x Then
+                                                    'sht.Cells.Replace What:=fndList(x), Replacement:=rplcList(x), _
+                                                              LookAt:=xlPart, SearchOrder:=xlByRows, MatchCase:=False, _
+                                                                SearchFormat:=False, ReplaceFormat:=False
+          
+         Selection.Replace What:=fndList(X), Replacement:=rplc, _
+          LookAt:=xlPart, SearchOrder:=xlByRows, MatchCase:=False, _
+          SearchFormat:=False, ReplaceFormat:=False
+          
+          
+                                        'End If
+                                                                        'Next sht
+  
+  Next X
+
+
+Selection.Replace What:="'", Replacement:="", LookAt:=xlPart, _
+        SearchOrder:=xlByRows, MatchCase:=False, SearchFormat:=False, _
+        ReplaceFormat:=False
+        
+        
+       ' Selection.Replace What:="'", Replacement:="", LookAt:=xlPart, SearchOrder:=xlByRows, MatchCase:=False, SearchFormat:=False, ReplaceFormat:=False
+
+End Sub
