@@ -1,0 +1,46 @@
+Option Explicit
+
+Dim X As Integer
+Dim y As Integer
+Dim lastRow As Integer
+
+
+Sub claims()
+
+                       
+Range("C1").EntireColumn.Insert
+
+lastRow = Range("A1").End(xlDown).row
+
+
+
+
+            For X = 1 To lastRow
+            
+            Cells(X, 3).FormulaR1C1 = "=RC[-2]=RC[-1]"
+            
+            Next X
+           
+
+
+
+End Sub
+
+
+Sub druga_czesc()
+
+Range("h1").EntireColumn.Insert
+
+lastRow = Range("f1").End(xlDown).row
+
+
+
+
+            For y = 1 To lastRow
+            
+            Cells(y, 8).FormulaR1C1 = "=RC[-2]=RC[-1]"
+            
+            Next y
+
+
+End Sub
