@@ -1,0 +1,13 @@
+Public Function ColorIndex(ByVal aRange As Range)
+    ColorIndex = aRange.Interior.ColorIndex
+    End Function
+
+Public Sub colorCells()
+
+    On Error Resume Next
+    With Application.Selection
+        For Each c In .Cells
+            c.Interior.ColorIndex = c.Value
+        Next c
+    End With
+     End Sub
